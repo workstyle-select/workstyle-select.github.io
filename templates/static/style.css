@@ -901,3 +901,33 @@ section h2,
     margin-right: 0;
   }
 }
+
+/* --- Table styles --- */
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.article-body table th,
+.article-body table td {
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-body table thead th {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.article-body table tbody tr:nth-child(even) {
+  background: var(--muted);
+}
+
+.article-body table tbody tr:hover {
+  background: #e8f0fe;
+}

@@ -43,6 +43,33 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
         return {}, content
 
 
+def parse_table(table_lines: list[str]) -> str:
+    """Markdownテーブルをhtml <table>に変換"""
+    rows = []
+    for line in table_lines:
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        rows.append(cells)
+
+    if len(rows) < 2:
+        return "\n".join(f"<p>{inline_md(l)}</p>" for l in table_lines)
+
+    # 2行目はセパレーター（|---|---| の行）なのでスキップ
+    header_cells = rows[0]
+    body_rows = rows[2:]
+
+    html = '<table>\n<thead>\n<tr>'
+    for cell in header_cells:
+        html += f'<th>{inline_md(cell)}</th>'
+    html += '</tr>\n</thead>\n<tbody>\n'
+    for row in body_rows:
+        html += '<tr>'
+        for cell in row:
+            html += f'<td>{inline_md(cell)}</td>'
+        html += '</tr>\n'
+    html += '</tbody>\n</table>'
+    return html
+
+
 def markdown_to_html(md: str) -> str:
     """軽量なMarkdown→HTML変換（外部ライブラリ不要）"""
     lines = md.split("\n")
@@ -50,10 +77,17 @@ def markdown_to_html(md: str) -> str:
     in_list = False
     in_code = False
     in_blockquote = False
+    table_buffer = []
+
+    def flush_table():
+        if table_buffer:
+            html_lines.append(parse_table(table_buffer[:]))
+            table_buffer.clear()
 
     for line in lines:
         # コードブロック
         if line.startswith("```"):
+            flush_table()
             if in_code:
                 html_lines.append("</code></pre>")
                 in_code = False
@@ -65,6 +99,16 @@ def markdown_to_html(md: str) -> str:
         if in_code:
             html_lines.append(line)
             continue
+
+        # テーブル行（| で始まる行）
+        if line.strip().startswith("|"):
+            if in_list:
+                html_lines.append("</ul>")
+                in_list = False
+            table_buffer.append(line)
+            continue
+        elif table_buffer:
+            flush_table()
 
         # 見出し
         h_match = re.match(r'^(#{1,6})\s+(.+)', line)
@@ -125,6 +169,7 @@ def markdown_to_html(md: str) -> str:
         if line.strip():
             html_lines.append(f"<p>{inline_md(line)}</p>")
 
+    flush_table()
     if in_list:
         html_lines.append("</ul>")
 
