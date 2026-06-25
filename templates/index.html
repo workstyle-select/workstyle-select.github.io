@@ -15,44 +15,90 @@
 <div class="home-layout">
 
   <section class="hero">
-    <h1>{{ site.name }}</h1>
-    <p>{{ site.description }}</p>
+    <div class="hero-copy">
+      <p class="hero-eyebrow">BUSINESS BUYING GUIDE</p>
+      <h1>{{ site.name }}</h1>
+      <p>{{ site.description }}</p>
+      <div class="hero-actions">
+        <a href="#latest" class="hero-button hero-button-primary">新着記事を見る</a>
+        <a href="#categories" class="hero-button">カテゴリから探す</a>
+      </div>
+    </div>
+    <div class="hero-panel" aria-label="比較軸">
+      {% if articles and articles[0].hero_image %}
+      <div class="hero-product">
+        <img src="{{ articles[0].hero_image }}" alt="{{ articles[0].title }}の掲載商品" loading="eager">
+      </div>
+      {% endif %}
+      <div class="hero-checklist">
+        <span>比較軸</span>
+        <strong>価格・使いやすさ・仕事での実用性</strong>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <strong>{{ articles | length }}</strong>
+          <span>公開記事</span>
+        </div>
+        <div>
+          <strong>4</strong>
+          <span>重点カテゴリ</span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="featured-articles">
-    <h2>新着記事</h2>
+  <section class="featured-articles" id="latest">
+    <div class="section-heading">
+      <span>Latest</span>
+      <h2>新着記事</h2>
+    </div>
     <div class="article-grid">
       {% for article in articles %}
       <article class="article-card">
-        <span class="article-niche">{{ article.niche }}</span>
-        <h3><a href="/{{ article.slug }}/">{{ article.title }}</a></h3>
-        <p class="article-excerpt">{{ article.description | truncate(100) }}</p>
-        <div class="article-meta">
-          <time>{{ article.updated }}</time>
+        {% if article.hero_image %}
+        <a href="/{{ article.slug }}/" class="article-card-image">
+          <img src="{{ article.hero_image }}" alt="{{ article.title }}の掲載商品" loading="lazy">
+        </a>
+        {% endif %}
+        <div class="article-card-body">
+          <span class="article-niche">{{ article.niche_label }}</span>
+          <h3><a href="/{{ article.slug }}/">{{ article.title }}</a></h3>
+          <p class="article-excerpt">{{ article.description | truncate(100) }}</p>
+          <div class="article-meta">
+            <time>{{ article.updated }}</time>
+            <span>{{ article.word_count }}字</span>
+          </div>
         </div>
       </article>
       {% endfor %}
     </div>
   </section>
 
-  <section class="categories">
-    <h2>カテゴリ</h2>
+  <section class="categories" id="categories">
+    <div class="section-heading">
+      <span>Categories</span>
+      <h2>カテゴリ</h2>
+    </div>
     <div class="category-grid">
-      <a href="/category/gadgets/" class="category-card gadgets">
-        <span class="category-icon">📱</span>
+      <a href="/category/biz_gadgets/" class="category-card gadgets">
+        <span class="category-kicker">GADGETS</span>
         <span>ガジェット</span>
+        <small>仕事道具・生産性</small>
       </a>
       <a href="/category/beauty/" class="category-card beauty">
-        <span class="category-icon">💄</span>
+        <span class="category-kicker">BEAUTY</span>
         <span>美容</span>
+        <small>身だしなみ・清潔感</small>
       </a>
       <a href="/category/finance/" class="category-card finance">
-        <span class="category-icon">💰</span>
+        <span class="category-kicker">MONEY</span>
         <span>マネー</span>
+        <small>支出管理・選び方</small>
       </a>
       <a href="/category/health/" class="category-card health">
-        <span class="category-icon">💪</span>
+        <span class="category-kicker">HEALTH</span>
         <span>健康</span>
+        <small>体調管理・習慣化</small>
       </a>
     </div>
   </section>

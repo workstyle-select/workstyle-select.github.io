@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{ niche }}の記事一覧 | {{ site.name }}{% endblock %}
+{% block title %}{{ niche_label }}の記事一覧 | {{ site.name }}{% endblock %}
 
 {% block meta %}
-  <meta name="description" content="{{ site.name }}の{{ niche }}カテゴリの記事一覧です。">
+  <meta name="description" content="{{ site.name }}の{{ niche_label }}カテゴリの記事一覧です。">
   <link rel="canonical" href="https://{{ site.domain }}/category/{{ niche }}/">
 {% endblock %}
 
@@ -11,13 +11,14 @@
 <div class="category-layout">
   <header class="category-header">
     <nav class="breadcrumb">
-      <a href="/">ホーム</a> &rsaquo; <span>{{ niche }}</span>
+      <a href="/">ホーム</a> &rsaquo; <span>{{ niche_label }}</span>
     </nav>
-    <h1>{{ niche }} の記事一覧</h1>
+    <h1>{{ niche_label }} の記事一覧</h1>
     <p>{{ articles | length }}件の記事</p>
   </header>
 
   <div class="article-list">
+    {% if articles %}
     {% for article in articles %}
     <article class="article-list-item">
       <h2><a href="/{{ article.slug }}/">{{ article.title }}</a></h2>
@@ -28,6 +29,13 @@
       </div>
     </article>
     {% endfor %}
+    {% else %}
+    <div class="empty-state">
+      <h2>記事を準備中です</h2>
+      <p>このカテゴリの記事は、公開後にこちらへ追加されます。</p>
+      <a href="/">トップページへ戻る</a>
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

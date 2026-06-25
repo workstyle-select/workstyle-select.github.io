@@ -25,6 +25,13 @@ CONTENT_DIR = ROOT / "content" / "articles"
 SITE_DIR = ROOT / "site"
 CONFIG_PATH = ROOT / "config" / "settings.yaml"
 
+CATEGORY_LABELS = {
+    "biz_gadgets": "ガジェット",
+    "beauty": "美容",
+    "finance": "マネー",
+    "health": "健康",
+}
+
 
 def load_config() -> dict:
     return yaml.safe_load(CONFIG_PATH.read_text())
@@ -202,7 +209,10 @@ def load_articles(status_filter: str = "published") -> list[dict]:
             plain_body = re.sub(r'[#*_`\[\]()<>|:-]', '', plain_body)
             fm["word_count"] = len(re.sub(r'\s+', '', plain_body))
         fm["body_html"] = markdown_to_html(body)
+        image_match = re.search(r'<img\s+[^>]*src="([^"]+)"', fm["body_html"])
+        fm["hero_image"] = image_match.group(1) if image_match else ""
         fm["slug"] = fm.get("slug", md_file.stem)
+        fm["niche_label"] = CATEGORY_LABELS.get(fm.get("niche", "other"), fm.get("niche", "other"))
         articles.append(fm)
 
     articles.sort(key=lambda a: a.get("updated", a.get("created", "")), reverse=True)
@@ -248,12 +258,18 @@ def build_site():
     for a in articles:
         niche = a.get("niche", "other")
         niches.setdefault(niche, []).append(a)
+    for niche in CATEGORY_LABELS:
+        niches.setdefault(niche, [])
 
     category_tmpl = env.get_template("category.html")
     for niche, niche_articles in niches.items():
         out_dir = SITE_DIR / "category" / niche
         out_dir.mkdir(parents=True, exist_ok=True)
-        html = category_tmpl.render(niche=niche, articles=niche_articles)
+        html = category_tmpl.render(
+            niche=niche,
+            niche_label=CATEGORY_LABELS.get(niche, niche),
+            articles=niche_articles,
+        )
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  [+] /category/{niche}/")
 
@@ -279,6 +295,8 @@ def build_site():
 def build_sitemap(articles: list[dict], domain: str):
     """XML サイトマップを生成"""
     urls = [f"https://{domain}/"]
+    for niche in CATEGORY_LABELS:
+        urls.append(f"https://{domain}/category/{niche}/")
     for a in articles:
         urls.append(f"https://{domain}/{a['slug']}/")
 
