@@ -117,6 +117,11 @@ def markdown_to_html(md: str) -> str:
             continue
 
         # 通常段落
+        if line.strip().startswith("<"):
+            html_lines.append(line)
+            continue
+
+        # 通常段落
         if line.strip():
             html_lines.append(f"<p>{inline_md(line)}</p>")
 
@@ -147,6 +152,10 @@ def load_articles(status_filter: str = "published") -> list[dict]:
         fm, body = parse_frontmatter(content)
         if status_filter and fm.get("status", "draft") != status_filter:
             continue
+        if not fm.get("word_count"):
+            plain_body = re.sub(r'```.*?```', '', body, flags=re.S)
+            plain_body = re.sub(r'[#*_`\[\]()<>|:-]', '', plain_body)
+            fm["word_count"] = len(re.sub(r'\s+', '', plain_body))
         fm["body_html"] = markdown_to_html(body)
         fm["slug"] = fm.get("slug", md_file.stem)
         articles.append(fm)
