@@ -1,11 +1,11 @@
 site:
   name: "ビジプロ選び"
-  domain: "takafumikoideru.github.io"
+  domain: "workstyle-select.github.io"
   description: "ビジネスパーソンのための厳選おすすめ情報。ガジェット・マネー・副業・健康を徹底比較"
   language: "ja"
-  author: "takafumikoideru"
+  author: "workstyle-select"
   ga_id: ""  # GA4設定後に G-XXXXXXXXXX を入力
-  repo: "takafumikoideru/ultimet_affi"
+  repo: "workstyle-select/workstyle-select.github.io"
 
 affiliate_programs:
   rakuten:
