@@ -14,13 +14,13 @@
       <a href="/">ホーム</a> &rsaquo; <span>{{ niche_label }}</span>
     </nav>
     <h1>{{ niche_label }} の記事一覧</h1>
-    <p>{{ articles | length }}件の記事</p>
+    <p>{{ articles | length }}件の記事を比較しやすい順に整理しています。</p>
   </header>
 
   <div class="article-list">
     {% if articles %}
     {% for article in articles %}
-    <article class="article-list-item">
+    <article class="article-list-item reveal-on-scroll">
       <h2><a href="/{{ article.slug }}/">{{ article.title }}</a></h2>
       <p>{{ article.description }}</p>
       <div class="article-meta">

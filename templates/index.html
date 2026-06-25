@@ -16,7 +16,7 @@
 
   <section class="hero">
     <div class="hero-copy">
-      <p class="hero-eyebrow">BUSINESS BUYING GUIDE</p>
+      <p class="hero-eyebrow">TRUSTED COMPARISON MEDIA</p>
       <h1>{{ site.name }}</h1>
       <p>{{ site.description }}</p>
       <div class="hero-actions">
@@ -25,14 +25,26 @@
       </div>
     </div>
     <div class="hero-panel" aria-label="比較軸">
-      {% if articles and articles[0].hero_image %}
-      <div class="hero-product">
-        <img src="{{ articles[0].hero_image }}" alt="{{ articles[0].title }}の掲載商品" loading="eager">
+      <div class="hero-panel-header">
+        <span>選び方の基準</span>
+        <strong>比較して、納得して、買う</strong>
       </div>
-      {% endif %}
-      <div class="hero-checklist">
-        <span>比較軸</span>
-        <strong>価格・使いやすさ・仕事での実用性</strong>
+      <div class="hero-comparison">
+        <div>
+          <span>01</span>
+          <strong>価格</strong>
+          <small>予算と相場を確認</small>
+        </div>
+        <div>
+          <span>02</span>
+          <strong>実用性</strong>
+          <small>仕事や生活で使えるか</small>
+        </div>
+        <div>
+          <span>03</span>
+          <strong>信頼性</strong>
+          <small>仕様とレビューを整理</small>
+        </div>
       </div>
       <div class="hero-stats">
         <div>
@@ -52,12 +64,29 @@
       <span>Latest</span>
       <h2>新着記事</h2>
     </div>
+    <div class="article-tools" data-article-tools>
+      <div class="filter-pills" aria-label="記事カテゴリ絞り込み">
+        <button type="button" class="filter-pill is-active" data-filter="all">すべて</button>
+        <button type="button" class="filter-pill" data-filter="gadgets">ガジェット</button>
+        <button type="button" class="filter-pill" data-filter="biz_gadgets">仕事道具</button>
+        <button type="button" class="filter-pill" data-filter="beauty">美容</button>
+        <button type="button" class="filter-pill" data-filter="health">健康</button>
+      </div>
+      <label class="article-search">
+        <span>記事検索</span>
+        <input type="search" data-article-search placeholder="キーワードで絞り込み">
+      </label>
+    </div>
     <div class="article-grid">
       {% for article in articles %}
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="{{ article.niche }}" data-title="{{ article.title }} {{ article.description }}">
         {% if article.hero_image %}
         <a href="/{{ article.slug }}/" class="article-card-image">
           <img src="{{ article.hero_image }}" alt="{{ article.title }}の掲載商品" loading="lazy">
+        </a>
+        {% else %}
+        <a href="/{{ article.slug }}/" class="article-card-image article-card-image-fallback" aria-label="{{ article.title }}">
+          <span>{{ article.niche_label }}</span>
         </a>
         {% endif %}
         <div class="article-card-body">
@@ -82,8 +111,13 @@
     <div class="category-grid">
       <a href="/category/biz_gadgets/" class="category-card gadgets">
         <span class="category-kicker">GADGETS</span>
-        <span>ガジェット</span>
+        <span>仕事ガジェット</span>
         <small>仕事道具・生産性</small>
+      </a>
+      <a href="/category/gadgets/" class="category-card gadgets">
+        <span class="category-kicker">REVIEWS</span>
+        <span>一般ガジェット</span>
+        <small>イヤホン・生活家電</small>
       </a>
       <a href="/category/beauty/" class="category-card beauty">
         <span class="category-kicker">BEAUTY</span>

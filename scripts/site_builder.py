@@ -26,10 +26,12 @@ SITE_DIR = ROOT / "site"
 CONFIG_PATH = ROOT / "config" / "settings.yaml"
 
 CATEGORY_LABELS = {
+    "gadgets": "ガジェット",
     "biz_gadgets": "ガジェット",
     "beauty": "美容",
     "finance": "マネー",
     "health": "健康",
+    "health_biz": "健康",
 }
 
 
