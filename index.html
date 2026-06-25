@@ -18,6 +18,7 @@
 
   <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="ビジプロ選び">
   <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/site.js" defer></script>
 </head>
 <body>
 
@@ -39,7 +40,7 @@
 
   <section class="hero">
     <div class="hero-copy">
-      <p class="hero-eyebrow">BUSINESS BUYING GUIDE</p>
+      <p class="hero-eyebrow">TRUSTED COMPARISON MEDIA</p>
       <h1>ビジプロ選び</h1>
       <p>ビジネスパーソンのための厳選おすすめ情報。ガジェット・マネー・副業・健康を徹底比較</p>
       <div class="hero-actions">
@@ -48,10 +49,26 @@
       </div>
     </div>
     <div class="hero-panel" aria-label="比較軸">
-      
-      <div class="hero-checklist">
-        <span>比較軸</span>
-        <strong>価格・使いやすさ・仕事での実用性</strong>
+      <div class="hero-panel-header">
+        <span>選び方の基準</span>
+        <strong>比較して、納得して、買う</strong>
+      </div>
+      <div class="hero-comparison">
+        <div>
+          <span>01</span>
+          <strong>価格</strong>
+          <small>予算と相場を確認</small>
+        </div>
+        <div>
+          <span>02</span>
+          <strong>実用性</strong>
+          <small>仕事や生活で使えるか</small>
+        </div>
+        <div>
+          <span>03</span>
+          <strong>信頼性</strong>
+          <small>仕様とレビューを整理</small>
+        </div>
       </div>
       <div class="hero-stats">
         <div>
@@ -71,9 +88,43 @@
       <span>Latest</span>
       <h2>新着記事</h2>
     </div>
+    <div class="article-tools" data-article-tools>
+      <div class="filter-pills" aria-label="記事カテゴリ絞り込み">
+        <button type="button" class="filter-pill is-active" data-filter="all">すべて</button>
+        <button type="button" class="filter-pill" data-filter="gadgets">ガジェット</button>
+        <button type="button" class="filter-pill" data-filter="biz_gadgets">仕事道具</button>
+        <button type="button" class="filter-pill" data-filter="beauty">美容</button>
+        <button type="button" class="filter-pill" data-filter="health">健康</button>
+      </div>
+      <label class="article-search">
+        <span>記事検索</span>
+        <input type="search" data-article-search placeholder="キーワードで絞り込み">
+      </label>
+    </div>
     <div class="article-grid">
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="gadgets" data-title="【2026年最新】ワイヤレスイヤホン おすすめ5選｜音質・ANC・通話で比較 ワイヤレスイヤホンのおすすめ5選を2026年版で比較。音質、ノイズキャンセリング、通話品質、装着感、価格の選び方をわかりやすく解説します。">
+        
+        <a href="/waiyaresuiyahon-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年最新】ワイヤレスイヤホン おすすめ5選｜音質・ANC・通話で比較">
+          <span>ガジェット</span>
+        </a>
+        
+        <div class="article-card-body">
+          <span class="article-niche">ガジェット</span>
+          <h3><a href="/waiyaresuiyahon-osusume/">【2026年最新】ワイヤレスイヤホン おすすめ5選｜音質・ANC・通話で比較</a></h3>
+          <p class="article-excerpt">ワイヤレスイヤホンのおすすめ5選を2026年版で比較。音質、ノイズキャンセリング、通話品質、装着感、価格の選び方をわかりやすく解説します。</p>
+          <div class="article-meta">
+            <time>2026-06-26</time>
+            <span>6224字</span>
+          </div>
+        </div>
+      </article>
+      
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】ビジネスバッグ おすすめ6選｜通勤・出張・テレワーク対応を徹底比較 ビジネスバッグのおすすめ6選を徹底比較。リュック・ブリーフケース・トートを通勤・出張・テレワーク用途で選ぶポイントと2026年最新モデルを解説。">
+        
+        <a href="/bizinesu-baggu-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】ビジネスバッグ おすすめ6選｜通勤・出張・テレワーク対応を徹底比較">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -86,7 +137,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】ヘッドセット Web会議 おすすめ6選｜Zoom・Teams対応・クリアな音声通話を実現 Web会議向けヘッドセットのおすすめ6選を徹底比較。Zoom・Teams対応・ノイズキャンセリングマイク・長時間装着快適性で選ぶ2026年最新ガイド。">
+        
+        <a href="/heddosetto-webkaigi-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】ヘッドセット Web会議 おすすめ6選｜Zoom・Teams対応・クリアな音声通話を実現">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -99,7 +154,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】キーボード 静音 テレワーク おすすめ6選｜打鍵感・静粛性・無線を徹底比較 テレワーク向け静音キーボードのおすすめ6選を徹底比較。打鍵感・静粛性・ワイヤレス・マルチデバイスなど在宅勤務に最適なモデルを2026年最新版で解説。">
+        
+        <a href="/kiibodo-seion-terewaaku-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】キーボード 静音 テレワーク おすすめ6選｜打鍵感・静粛性・無線を徹底比較">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -112,10 +171,14 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="health_biz" data-title="【2026年版】マッサージガン おすすめ6選｜肩こり・腰痛・疲労回復をセルフケアで解決 マッサージガンのおすすめ6選を徹底比較。肩こり・腰痛・疲労回復に効果的なパワー・静音性・バッテリー・コスパで選ぶ2026年最新ガイド。">
+        
+        <a href="/massaaji-gan-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】マッサージガン おすすめ6選｜肩こり・腰痛・疲労回復をセルフケアで解決">
+          <span>健康</span>
+        </a>
         
         <div class="article-card-body">
-          <span class="article-niche">health_biz</span>
+          <span class="article-niche">健康</span>
           <h3><a href="/massaaji-gan-osusume/">【2026年版】マッサージガン おすすめ6選｜肩こり・腰痛・疲労回復をセルフケアで解決</a></h3>
           <p class="article-excerpt">マッサージガンのおすすめ6選を徹底比較。肩こり・腰痛・疲労回復に効果的なパワー・静音性・バッテリー・コスパで選ぶ2026年最新ガイド。</p>
           <div class="article-meta">
@@ -125,7 +188,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】水筒 ビジネス おすすめ6選｜通勤・オフィス・テレワーク対応を徹底比較 ビジネス向け水筒のおすすめ6選を徹底比較。保温・保冷性能・漏れにくさ・オフィスでの見た目・手入れのしやすさで選ぶ2026年最新ガイド。">
+        
+        <a href="/mizutou-bizinesu-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】水筒 ビジネス おすすめ6選｜通勤・オフィス・テレワーク対応を徹底比較">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -138,7 +205,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】モバイルバッテリー 大容量 おすすめ6選｜出張・テレワークに最適な選び方 大容量モバイルバッテリーのおすすめ6選を徹底比較。出張・テレワーク対応、急速充電・軽量・大容量のバランスで選べる2026年最新ガイド。">
+        
+        <a href="/mobairu-batteri-daiyoryo-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】モバイルバッテリー 大容量 おすすめ6選｜出張・テレワークに最適な選び方">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -151,7 +222,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】外付けモニター ビジネス おすすめ6選｜27型・4K・ウルトラワイドを徹底比較 ビジネス向け外付けモニターのおすすめ6選を徹底比較。27型・4K・USB-C給電・ウルトラワイドなどテレワークで生産性が上がるモデルを2026年最新版で解説。">
+        
+        <a href="/monitaa-bizinesu-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】外付けモニター ビジネス おすすめ6選｜27型・4K・ウルトラワイドを徹底比較">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -164,7 +239,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】ノイズキャンセリングヘッドホン おすすめ6選｜テレワーク・集中作業・出張対応を徹底比較 ノイズキャンセリングヘッドホンのおすすめ6選を徹底比較。Sony WH-1000XM6、Bose QC45、Apple AirPods Max等をANC性能・通話品質・バッテリーで選ぶ2026年最新ガイド。">
+        
+        <a href="/noise-cancelling-heddhon-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】ノイズキャンセリングヘッドホン おすすめ6選｜テレワーク・集中作業・出張対応を徹底比較">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -177,7 +256,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】軽量ノートパソコン ビジネス おすすめ6選｜持ち運び重視・1kg以下を徹底比較 軽量ビジネスノートPCのおすすめ6選を徹底比較。1kg以下・バッテリー持ち・処理性能など外回り・出張に最適なモデルを2026年最新版で解説。">
+        
+        <a href="/nootopasokon-keikei-bizinesu-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】軽量ノートパソコン ビジネス おすすめ6選｜持ち運び重視・1kg以下を徹底比較">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -190,10 +273,14 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="health_biz" data-title="【2026年版】オフィスチェア テレワーク おすすめ6選｜腰痛対策・長時間対応を徹底比較 テレワーク向けオフィスチェアのおすすめ6選を徹底比較。腰痛対策・長時間座り心地・ランバーサポートなど在宅勤務に最適なモデルを2026年最新版で解説。">
+        
+        <a href="/ofisu-chea-terewaaku-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】オフィスチェア テレワーク おすすめ6選｜腰痛対策・長時間対応を徹底比較">
+          <span>健康</span>
+        </a>
         
         <div class="article-card-body">
-          <span class="article-niche">health_biz</span>
+          <span class="article-niche">健康</span>
           <h3><a href="/ofisu-chea-terewaaku-osusume/">【2026年版】オフィスチェア テレワーク おすすめ6選｜腰痛対策・長時間対応を徹底比較</a></h3>
           <p class="article-excerpt">テレワーク向けオフィスチェアのおすすめ6選を徹底比較。腰痛対策・長時間座り心地・ランバーサポートなど在宅勤務に最適なモデルを2026年最新版で解説。</p>
           <div class="article-meta">
@@ -203,7 +290,11 @@
         </div>
       </article>
       
-      <article class="article-card">
+      <article class="article-card reveal-on-scroll" data-article-card data-niche="biz_gadgets" data-title="【2026年版】PCスタンド テレワーク おすすめ6選｜姿勢改善・首こり解消・デスク整理に最適 テレワーク向けPCスタンドのおすすめ6選を徹底比較。首こり・姿勢改善・デスク整理に役立つ高さ調整・折りたたみ・多機能モデルを2026年最新版で解説。">
+        
+        <a href="/pc-sutando-terewaaku-osusume/" class="article-card-image article-card-image-fallback" aria-label="【2026年版】PCスタンド テレワーク おすすめ6選｜姿勢改善・首こり解消・デスク整理に最適">
+          <span>ガジェット</span>
+        </a>
         
         <div class="article-card-body">
           <span class="article-niche">ガジェット</span>
@@ -212,19 +303,6 @@
           <div class="article-meta">
             <time>2026-06-25</time>
             <span>7447字</span>
-          </div>
-        </div>
-      </article>
-      
-      <article class="article-card">
-        
-        <div class="article-card-body">
-          <span class="article-niche">health_biz</span>
-          <h3><a href="/puroteen-kosupaosusume/">【2026年版】プロテイン コスパ おすすめ6選｜ビジネスパーソンの疲れにくい体づくり</a></h3>
-          <p class="article-excerpt">コスパ重視プロテインのおすすめ6選を徹底比較。筋肉維持・疲労回復・ダイエット目的別に、ビジネスパーソンが飲みやすい味・溶けやすさを2026年最新版で解説。</p>
-          <div class="article-meta">
-            <time>2026-06-25</time>
-            <span>7274字</span>
           </div>
         </div>
       </article>
@@ -240,8 +318,13 @@
     <div class="category-grid">
       <a href="/category/biz_gadgets/" class="category-card gadgets">
         <span class="category-kicker">GADGETS</span>
-        <span>ガジェット</span>
+        <span>仕事ガジェット</span>
         <small>仕事道具・生産性</small>
+      </a>
+      <a href="/category/gadgets/" class="category-card gadgets">
+        <span class="category-kicker">REVIEWS</span>
+        <span>一般ガジェット</span>
+        <small>イヤホン・生活家電</small>
       </a>
       <a href="/category/beauty/" class="category-card beauty">
         <span class="category-kicker">BEAUTY</span>
