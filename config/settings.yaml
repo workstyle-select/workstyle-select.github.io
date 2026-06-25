@@ -1,0 +1,45 @@
+site:
+  name: "ビジプロ選び"
+  domain: "takafumikoideru.github.io"
+  description: "ビジネスパーソンのための厳選おすすめ情報。ガジェット・マネー・副業・健康を徹底比較"
+  language: "ja"
+  author: "takafumikoideru"
+  ga_id: ""  # GA4設定後に G-XXXXXXXXXX を入力
+  repo: "takafumikoideru/ultimet_affi"
+
+affiliate_programs:
+  rakuten:
+    name: "楽天アフィリエイト"
+    affiliate_id: "5538c2a8.5541de72.5538c2a9.ec1c95aa"
+    base_url: "https://hb.afl.rakuten.co.jp/ichiba/{affiliate_id}/?pc={target_url}&link_type=text"
+    cookie_days: 30
+    commission_rate: 0.01
+
+  a8net:
+    name: "A8.net"
+    media_id: "4B5WG8"
+    default_a8mat: "4B5WG8+7YDJIY+4R54+601S1"
+    commission_rate: 0.08
+
+  amazon:
+    name: "Amazon アソシエイト"
+    tag: ""  # 登録後に your-tag-20 を入力
+    base_url: "https://www.amazon.co.jp/dp/{asin}?tag={tag}"
+    cookie_days: 1
+    commission_rate: 0.03
+
+content:
+  articles_per_day: 3
+  min_word_count: 2000
+  max_word_count: 5000
+  languages: ["ja"]
+
+seo:
+  title_max_length: 60
+  meta_description_max_length: 160
+  internal_links_per_article: 5
+
+scraping:
+  delay_seconds: 2
+  user_agent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
+  max_retries: 3

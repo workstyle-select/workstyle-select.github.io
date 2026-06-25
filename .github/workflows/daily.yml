@@ -1,0 +1,86 @@
+name: Daily Affiliate Automation
+
+on:
+  schedule:
+    # 毎日06:00 JST (21:00 UTC)
+    - cron: '0 21 * * *'
+  workflow_dispatch:  # 手動実行可能
+
+jobs:
+  keyword-research:
+    name: キーワードリサーチ更新
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 依存関係インストール
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install jinja2 pyyaml python-slugify feedgenerator requests beautifulsoup4
+
+      - name: キーワードリサーチ実行
+        run: |
+          .venv/bin/python scripts/keyword_research.py 2>&1 | head -100
+
+      - name: DB変更をコミット
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: keyword research update [skip ci]"
+          file_pattern: "database/affiliate.db config/keywords.yaml"
+
+  build-and-deploy:
+    name: サイトビルド＆デプロイ
+    runs-on: ubuntu-latest
+    needs: keyword-research
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 依存関係インストール
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install jinja2 pyyaml python-slugify feedgenerator
+
+      - name: サイトビルド
+        run: .venv/bin/python scripts/site_builder.py
+
+      - name: GitHub Pages デプロイ
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          commit_message: "deploy: site update $(date '+%Y-%m-%d')"
+
+  seo-audit:
+    name: SEOオーディット
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 依存関係インストール
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install pyyaml
+
+      - name: SEOチェック実行
+        run: |
+          for f in content/articles/*.md; do
+            slug=$(basename "$f" .md)
+            echo "=== $slug ==="
+            .venv/bin/python scripts/seo.py "$slug" 2>&1 || true
+          done

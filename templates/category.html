@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ niche }}の記事一覧 | {{ site.name }}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="{{ site.name }}の{{ niche }}カテゴリの記事一覧です。">
+  <link rel="canonical" href="https://{{ site.domain }}/category/{{ niche }}/">
+{% endblock %}
+
+{% block content %}
+<div class="category-layout">
+  <header class="category-header">
+    <nav class="breadcrumb">
+      <a href="/">ホーム</a> &rsaquo; <span>{{ niche }}</span>
+    </nav>
+    <h1>{{ niche }} の記事一覧</h1>
+    <p>{{ articles | length }}件の記事</p>
+  </header>
+
+  <div class="article-list">
+    {% for article in articles %}
+    <article class="article-list-item">
+      <h2><a href="/{{ article.slug }}/">{{ article.title }}</a></h2>
+      <p>{{ article.description }}</p>
+      <div class="article-meta">
+        <time>{{ article.updated }}</time>
+        <span>{{ article.word_count }}字</span>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

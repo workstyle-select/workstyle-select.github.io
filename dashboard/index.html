@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UltiAffi ダッシュボード</title>
+  <style>
+    :root { --primary:#1a56db; --success:#16a34a; --warn:#d97706; --danger:#dc2626; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f1f5f9; color: #1e293b; }
+    .header { background: var(--primary); color: #fff; padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; }
+    .header h1 { font-size: 1.4rem; }
+    .header .updated { font-size: .8rem; opacity: .8; margin-left: auto; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .kpi { background: #fff; border-radius: 12px; padding: 1.5rem; border-left: 4px solid var(--primary); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .kpi-label { font-size: .8rem; color: #64748b; text-transform: uppercase; letter-spacing: .05em; }
+    .kpi-value { font-size: 2rem; font-weight: 700; margin-top: .25rem; }
+    .kpi-sub { font-size: .85rem; color: #64748b; margin-top: .25rem; }
+    .kpi.earnings { border-color: var(--success); }
+    .kpi.earnings .kpi-value { color: var(--success); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .card h2 { font-size: 1.1rem; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #e2e8f0; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th { text-align: left; padding: .6rem .75rem; background: #f8fafc; color: #64748b; font-size: .8rem; text-transform: uppercase; }
+    td { padding: .6rem .75rem; border-top: 1px solid #f1f5f9; }
+    tr:hover td { background: #f8fafc; }
+    .badge { padding: .2rem .6rem; border-radius: 20px; font-size: .75rem; font-weight: 600; }
+    .badge-low { background: #dcfce7; color: #16a34a; }
+    .badge-medium { background: #fef3c7; color: #d97706; }
+    .badge-high { background: #fee2e2; color: #dc2626; }
+    .score { font-weight: 700; }
+    .score.good { color: var(--success); }
+    .score.warn { color: var(--warn); }
+    .score.bad { color: var(--danger); }
+    .actions { margin-top: 1.5rem; display: flex; gap: .75rem; flex-wrap: wrap; }
+    .btn { padding: .6rem 1.2rem; border-radius: 8px; border: none; cursor: pointer; font-size: .9rem; font-weight: 600; text-decoration: none; display: inline-block; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .workflow-steps { counter-reset: step; }
+    .step { padding: .75rem 1rem; border-left: 3px solid #e2e8f0; margin: .5rem 0; position: relative; padding-left: 2.5rem; }
+    .step::before { counter-increment: step; content: counter(step); position: absolute; left: -1px; top: 50%; transform: translateY(-50%); background: var(--primary); color: #fff; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; }
+    .step code { background: #f1f5f9; padding: .1rem .4rem; border-radius: 4px; font-size: .85rem; }
+    .no-data { text-align: center; color: #94a3b8; padding: 2rem; font-size: .95rem; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>UltiAffi ダッシュボード</h1>
+  <span class="updated" id="updated-time">読み込み中...</span>
+</div>
+
+<div class="container">
+
+  <!-- KPIカード -->
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi"><div class="kpi-label">読み込み中</div><div class="kpi-value">-</div></div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- キーワード状況 -->
+    <div class="card">
+      <h2>キーワード状況</h2>
+      <table>
+        <thead><tr><th>キーワード</th><th>ニッチ</th><th>競合</th><th>ステータス</th></tr></thead>
+        <tbody id="keywords-table"><tr><td colspan="4" class="no-data">データなし</td></tr></tbody>
+      </table>
+    </div>
+
+    <!-- 最新記事 -->
+    <div class="card">
+      <h2>最新記事</h2>
+      <table>
+        <thead><tr><th>タイトル</th><th>ステータス</th><th>更新日</th></tr></thead>
+        <tbody id="articles-table"><tr><td colspan="3" class="no-data">データなし</td></tr></tbody>
+      </table>
+    </div>
+
+    <!-- プログラム別収益 -->
+    <div class="card">
+      <h2>プログラム別収益</h2>
+      <table>
+        <thead><tr><th>プログラム</th><th>収益</th><th>クリック</th><th>CV</th></tr></thead>
+        <tbody id="programs-table"><tr><td colspan="4" class="no-data">データなし（まず記事を公開してね）</td></tr></tbody>
+      </table>
+    </div>
+
+    <!-- 次のアクション -->
+    <div class="card">
+      <h2>ワークフロー</h2>
+      <div class="workflow-steps">
+        <div class="step">キーワードリサーチ: <code>make research</code></div>
+        <div class="step">優先KW確認: <code>make keywords-todo</code></div>
+        <div class="step">記事作成: <code>make new-article KEYWORD="..."</code></div>
+        <div class="step">Claude/Codexで記事執筆</div>
+        <div class="step">SEOチェック: <code>make seo-check SLUG=...</code></div>
+        <div class="step">リンク挿入: <code>make add-links SLUG=...</code></div>
+        <div class="step">公開: <code>make publish</code></div>
+      </div>
+      <div class="actions">
+        <a href="https://search.google.com/search-console" target="_blank" class="btn btn-secondary">Search Console</a>
+        <a href="https://analytics.google.com" target="_blank" class="btn btn-secondary">GA4</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+async function loadData() {
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error('data.json not found');
+    const data = await res.json();
+    renderDashboard(data);
+  } catch(e) {
+    document.getElementById('updated-time').textContent = 'data.jsonが見つかりません。make analytics を実行してください';
+  }
+}
+
+function renderDashboard(data) {
+  const s = data.summary;
+  const e = data.earnings;
+
+  document.getElementById('updated-time').textContent =
+    '更新: ' + new Date(data.generated_at).toLocaleString('ja-JP');
+
+  // KPI
+  const kpiGrid = document.getElementById('kpi-grid');
+  kpiGrid.innerHTML = `
+    <div class="kpi earnings">
+      <div class="kpi-label">累計収益</div>
+      <div class="kpi-value">¥${(e.total_jpy||0).toLocaleString()}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">公開記事</div>
+      <div class="kpi-value">${s.published_articles}</div>
+      <div class="kpi-sub">下書き: ${s.draft_articles}本</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">キーワード</div>
+      <div class="kpi-value">${s.total_keywords}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">アフィリリンク</div>
+      <div class="kpi-value">${s.affiliate_links}</div>
+    </div>
+  `;
+
+  // キーワード
+  const kwRows = [...(data.keywords.todo||[]), ...(data.keywords.writing||[])].slice(0, 10);
+  document.getElementById('keywords-table').innerHTML = kwRows.length
+    ? kwRows.map(k => `<tr>
+        <td>${k.keyword}</td>
+        <td>${k.niche||'-'}</td>
+        <td><span class="badge badge-${k.competition||'medium'}">${k.competition||'-'}</span></td>
+        <td>${k.status}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="4" class="no-data">make research でキーワードを追加</td></tr>';
+
+  // 記事
+  const articles = data.recent_articles || [];
+  document.getElementById('articles-table').innerHTML = articles.length
+    ? articles.map(a => `<tr>
+        <td>${a.title ? a.title.slice(0, 30) : '-'}</td>
+        <td>${a.status}</td>
+        <td>${(a.updated_at||'').slice(0,10)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="3" class="no-data">記事なし</td></tr>';
+
+  // プログラム別収益
+  const progs = e.by_program || [];
+  document.getElementById('programs-table').innerHTML = progs.length
+    ? progs.map(p => `<tr>
+        <td>${p.program}</td>
+        <td>¥${(p.earnings||0).toLocaleString()}</td>
+        <td>${p.clicks||0}</td>
+        <td>${p.conversions||0}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="4" class="no-data">まず記事を公開してアフィリリンクを設定してください</td></tr>';
+}
+
+loadData();
+</script>
+</body>
+</html>

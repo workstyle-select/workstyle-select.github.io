@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.name }} - {{ site.description }}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="{{ site.description }}">
+  <link rel="canonical" href="https://{{ site.domain }}/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site.name }}">
+  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:url" content="https://{{ site.domain }}/">
+{% endblock %}
+
+{% block content %}
+<div class="home-layout">
+
+  <section class="hero">
+    <h1>{{ site.name }}</h1>
+    <p>{{ site.description }}</p>
+  </section>
+
+  <section class="featured-articles">
+    <h2>新着記事</h2>
+    <div class="article-grid">
+      {% for article in articles %}
+      <article class="article-card">
+        <span class="article-niche">{{ article.niche }}</span>
+        <h3><a href="/{{ article.slug }}/">{{ article.title }}</a></h3>
+        <p class="article-excerpt">{{ article.description | truncate(100) }}</p>
+        <div class="article-meta">
+          <time>{{ article.updated }}</time>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="categories">
+    <h2>カテゴリ</h2>
+    <div class="category-grid">
+      <a href="/category/gadgets/" class="category-card gadgets">
+        <span class="category-icon">📱</span>
+        <span>ガジェット</span>
+      </a>
+      <a href="/category/beauty/" class="category-card beauty">
+        <span class="category-icon">💄</span>
+        <span>美容</span>
+      </a>
+      <a href="/category/finance/" class="category-card finance">
+        <span class="category-icon">💰</span>
+        <span>マネー</span>
+      </a>
+      <a href="/category/health/" class="category-card health">
+        <span class="category-icon">💪</span>
+        <span>健康</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

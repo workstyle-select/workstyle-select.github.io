@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} | {{ site.name }}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="{{ article.description }}">
+  <link rel="canonical" href="https://{{ site.domain }}/{{ article.slug }}/">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ article.title }}">
+  <meta property="og:description" content="{{ article.description }}">
+  <meta property="og:url" content="https://{{ site.domain }}/{{ article.slug }}/">
+  <meta property="og:site_name" content="{{ site.name }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ article.title }}">
+  <meta name="twitter:description" content="{{ article.description }}">
+
+  <!-- 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ article.title }}",
+    "description": "{{ article.description }}",
+    "datePublished": "{{ article.created }}",
+    "dateModified": "{{ article.updated }}",
+    "author": {"@type": "Organization", "name": "{{ site.name }}"},
+    "publisher": {"@type": "Organization", "name": "{{ site.name }}"}
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+<div class="article-layout">
+
+  <article class="article-main" itemscope itemtype="https://schema.org/Article">
+    <header class="article-header">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href="/">ホーム</a> &rsaquo;
+        <a href="/category/{{ article.niche }}/">{{ article.niche }}</a> &rsaquo;
+        <span>{{ article.title }}</span>
+      </nav>
+
+      <h1 class="article-title" itemprop="headline">{{ article.title }}</h1>
+
+      <div class="article-meta">
+        <time datetime="{{ article.updated }}" itemprop="dateModified">
+          最終更新: {{ article.updated }}
+        </time>
+        <span class="word-count">約{{ article.word_count }}字</span>
+      </div>
+
+      {% if article.description %}
+      <p class="article-lead">{{ article.description }}</p>
+      {% endif %}
+    </header>
+
+    <div class="article-body" itemprop="articleBody">
+      {{ article.body_html | safe }}
+    </div>
+
+    <footer class="article-footer">
+      <div class="affiliate-disclosure">
+        <p>※ 当記事にはアフィリエイトリンクが含まれています。</p>
+      </div>
+
+      <div class="tags">
+        {% for tag in article.tags %}
+        <a href="/tag/{{ tag }}/" class="tag">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+    </footer>
+  </article>
+
+  <aside class="article-sidebar">
+    <div class="sidebar-widget toc-widget">
+      <h3>目次</h3>
+      <div class="toc" id="toc"></div>
+    </div>
+
+    <div class="sidebar-widget related-widget">
+      <h3>関連記事</h3>
+      <ul>
+        {% for rel in articles[:5] %}
+        {% if rel.slug != article.slug %}
+        <li><a href="/{{ rel.slug }}/">{{ rel.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+// 目次を自動生成
+(function() {
+  var toc = document.getElementById('toc');
+  if (!toc) return;
+  var headings = document.querySelectorAll('.article-body h2, .article-body h3');
+  if (headings.length < 2) { toc.closest('.toc-widget').style.display='none'; return; }
+  var ul = document.createElement('ol');
+  headings.forEach(function(h) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    if (h.tagName === 'H3') li.style.paddingLeft = '1em';
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  toc.appendChild(ul);
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="{{ site.language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ site.name }}{% endblock %}</title>
+
+  {% block meta %}{% endblock %}
+
+  {% if site.ga_id %}
+  <!-- Google Analytics 4 (無料) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ site.ga_id }}');
+
+    // アフィリエイトクリック追跡
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[rel*="nofollow"]');
+      if (link) {
+        gtag('event', 'affiliate_click', {
+          link_url: link.href,
+          link_text: link.textContent.trim().slice(0, 50)
+        });
+      }
+    });
+  </script>
+  {% endif %}
+
+  <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="{{ site.name }}">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="/" class="site-logo">{{ site.name }}</a>
+    <ul class="nav-links">
+      <li><a href="/category/gadgets/">ガジェット</a></li>
+      <li><a href="/category/beauty/">美容</a></li>
+      <li><a href="/category/finance/">マネー</a></li>
+      <li><a href="/category/health/">健康</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <p class="footer-disclaimer">
+      当サイトはアフィリエイトプログラムを利用しています。商品・サービスの購入はご自身の判断でお願いします。
+    </p>
+    <nav class="footer-nav">
+      <a href="/privacy/">プライバシーポリシー</a>
+      <a href="/about/">運営者情報</a>
+      <a href="/contact/">お問い合わせ</a>
+    </nav>
+    <p class="copyright">&copy; {{ now.year }} {{ site.name }}</p>
+  </div>
+</footer>
+
+</body>
+</html>
