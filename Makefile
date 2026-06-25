@@ -101,6 +101,14 @@ add-links: ## アフィリエイトリンクを管理（インタラクティブ
 demo-link: ## リンク生成デモ
 	$(PYTHON) scripts/link_manager.py
 
+.PHONY: add-rakuten-images
+add-rakuten-images: ## 楽天商品画像を全記事に挿入（要 App ID）
+	$(PYTHON) scripts/rakuten_image_linker.py
+
+.PHONY: add-rakuten-images-dry
+add-rakuten-images-dry: ## 楽天商品画像挿入の確認（変更なし）
+	$(PYTHON) scripts/rakuten_image_linker.py --dry-run
+
 # ─────────────────────────────────────────────
 # サイトビルド＆デプロイ
 # ─────────────────────────────────────────────

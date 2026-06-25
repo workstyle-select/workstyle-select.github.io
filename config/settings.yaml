@@ -11,6 +11,7 @@ affiliate_programs:
   rakuten:
     name: "楽天アフィリエイト"
     affiliate_id: "5538c2a8.5541de72.5538c2a9.ec1c95aa"
+    app_id: ""  # webservice.rakuten.co.jp で取得したアプリID（画像取得に必要）
     base_url: "https://hb.afl.rakuten.co.jp/ichiba/{affiliate_id}/?pc={target_url}&link_type=text"
     cookie_days: 30
     commission_rate: 0.01

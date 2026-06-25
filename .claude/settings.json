@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/takafumikoideru/ultimet_affi/.claude/format-design.sh",
+            "statusMessage": "デザイン体裁を整形中...",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
