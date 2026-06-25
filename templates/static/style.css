@@ -651,20 +651,19 @@ section h2,
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 190px;
+  height: 220px;
+  min-height: 220px;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background:
-    linear-gradient(135deg, rgba(37, 99, 235, .08), rgba(249, 115, 22, .08)),
-    #fff;
+  background: #fff;
   text-decoration: none;
 }
 
 .product-image {
   width: 100%;
-  max-width: 190px;
-  height: 180px;
+  max-width: 200px;
+  height: 200px;
   object-fit: contain;
   padding: .65rem;
   mix-blend-mode: multiply;
